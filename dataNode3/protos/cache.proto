@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package cache;
+
+//calls data nodes and gets model
+service getModelFromDataNode{
+  rpc getModel(modelInfo) returns (model);
+  rpc putModel(wholeModel) returns (model);
+  rpc putObjectWithTime(ObjectWithTime) returns (text);
+  rpc putObject(object) returns (text);
+  rpc putModelWithTime(ModelInfoWithTime) returns (model);
+}
+
+service extras{
+  rpc inValidate(modelInfo) returns (text);
+  rpc get_object_created_time(modelInfo) returns (text);
+}
+
+service ttlInspector{
+  rpc inspect(segments) returns (modelMeta);
+  rpc serverStartUp(serverSpecs) returns(boolean);
+  rpc serverShutDown(serverSpecs) returns (boolean);
+}
+
+message segments{
+  repeated string segment = 1;
+}
+
+//calls master and returns meta
+service updateMeta{
+  rpc updateDataNodeMeta(DataNodeSize) returns (text);
+  rpc updateEvictedModelMeta(modelMeta) returns (text);
+}
+
+// data note current size and Ip of the dataNode
+message DataNodeSize{
+  string size = 1;
+  string IP = 2;
+}
+
+//name of model and segment of model
+message modelMeta{
+  repeated string name = 1;
+  repeated string segment = 2;
+}
+
+message wholeModel{
+  string name = 1;
+  string segment = 2;
+}
+message ObjectWithTime{
+  string name = 1;
+  string segment = 2;
+  string time = 3;
+  bytes object = 4;
+}
+
+message ModelInfoWithTime{
+  string name = 1;
+  string segment = 2;
+  string time = 3;
+}
+
+message object{
+  string name = 1;
+  string segment = 2;
+  bytes object = 3;
+}
+
+//name of model and segment of model
+message modelInfo{
+  string name = 1;
+  string segment = 2;
+}
+
+// DN is a list of DataNodes where data is stored
+message DataNode{
+  string DN = 1;
+}
+
+// object is the actual model in form of bytes
+message model{
+  bytes object = 1;
+}
+
+//simply return text
+message text{
+  string message = 1;
+}
+
+message serverSpecs{
+  string DN =1;
+  string storage = 2;
+}
+
+message boolean{
+  bool bool = 1;
+}

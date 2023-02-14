@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<cache-congif size ="530">
+    <cache name="a" max_cache_size="100" max_obj_size="100" eviction_percentage= "40" />
+    <cache name="b" max_cache_size="320" max_obj_size="310" eviction_percentage= "40" />
+    <cache name="c" max_cache_size="110" max_obj_size="100" eviction_percentage= "60" />
+</cache-congif>
